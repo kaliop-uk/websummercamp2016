@@ -1,0 +1,8 @@
+# eZPublish cronjobs
+
+# NB: the Sf env to use has to be set in the file /home/site/.cron_env
+
+*/2 * * * * bash -c '. /home/site/.cron_env; cd /var/www/site && php ezpublish/console ezpublish:legacy:script runcronjobs.php --siteaccess ezdeploy_admin frequent' >> /var/www/site/ezpublish_legacy/var/log/crontab.log 2>&1
+# On dev machines, the docker containers might be off during nighttime, so we run these more often than normal
+31 */6 * * * bash -c '. /home/site/.cron_env; cd /var/www/site && php ezpublish/console ezpublish:legacy:script runcronjobs.php --siteaccess ezdeploy_admin' >> /var/www/site/ezpublish_legacy/var/log/crontab.log 2>&1
+41 */6 * * * bash -c '. /home/site/.cron_env; cd /var/www/site && php ezpublish/console ezpublish:legacy:script runcronjobs.php --siteaccess ezdeploy_admin infrequent' >> /var/www/site/ezpublish_legacy/var/log/crontab.log 2>&1

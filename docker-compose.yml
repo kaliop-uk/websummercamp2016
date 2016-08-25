@@ -1,0 +1,186 @@
+### Notes
+#
+# - some environment variables are needed to make sure this docker-compose config file works
+# - using the 'build' config instead of 'image' allows to build the platform with just 'docker-compose build'
+# - SYS_PTRACE capability is needed to allow the containers to read /proc/$PID, which is needed by init scripts
+#
+# The docker-compose 'service' name corresponds to the top-level yml keys, whereas the container name is used in most
+# 'docker' commands.
+# Keeping a separate container name for each project allows to run many container platforms in parallel - this is
+# achieved by always prepending '-p projectname' or setting the env var COMPOSE_PROJECT_NAME when running docker-compose
+
+
+version: '2'
+
+services:
+    web:
+        build: images/web
+        hostname: web
+        container_name: ${COMPOSE_PROJECT_NAME}_web
+        ports:
+            - "80:80"
+        volumes:
+            - ./config/web/sites-available/:/etc/apache2/sites-available
+            - ./config/web/php5/apache2/custom_vars.ini:/etc/php5/apache2/conf.d/custom_vars.ini
+            - ./site/:/var/www/site
+            - ./logs/apache/:/var/log/apache2
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        cap_add:
+            - SYS_PTRACE
+
+    cli:
+        build: images/cli
+        hostname: cli
+        container_name: ${COMPOSE_PROJECT_NAME}_cli
+        privileged: true
+        #links:
+        #    - web:wrbm-cis_web
+        #    - mysql:wrbm-cis_mysql
+        #    - memcached:wrbm-cis_memcached
+        #    - solr:wrbm-cis_solr
+        #    - nginx:wrbm-cis_nginx
+        #    - varnish:wrbm-cis_varnish
+        volumes:
+            - ./site/:/var/www/site
+            - ./logs/cli:/var/log/php
+            - ./config/cli/php5/custom_vars.ini:/etc/php5/cli/conf.d/custom_vars.ini
+            # files in /tmp/cron.d get managed by bootstrap.sh
+            - ./config/cli/cron.d:/tmp/cron.d
+            #- ~/.gitconfig:/home/site/.gitconfig
+            - ~/.ssh/config:/home/site/.ssh/config
+            - "$SSH_AUTH_SOCK:/ssh-agent"
+            - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            - SSH_AUTH_SOCK=/ssh-agent
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        cap_add:
+            - SYS_PTRACE
+
+    memcached:
+        build: images/memcached
+        hostname: memcached
+        container_name: ${COMPOSE_PROJECT_NAME}_memcached
+        ports:
+            - "11211:11211"
+        volumes:
+            - ./logs/memcached/:/var/log/memcache
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        cap_add:
+            - SYS_PTRACE
+
+    mysql:
+        build: images/mysql
+        hostname: mysql
+        container_name: ${COMPOSE_PROJECT_NAME}_mysql
+        # nb: this prevents the image to start on some ubuntu installs because of apparmor config...
+        #privileged: true
+        ports:
+            - "3307:3306"
+        volumes:
+            - ./config/mysql/:/etc/mysql/conf.d/
+            - ./data/mysql/:/var/lib/mysql
+            - ./logs/mysql/:/var/log/mysql
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        cap_add:
+            - SYS_PTRACE
+
+    solr:
+        build: images/solr
+        hostname: solr
+        container_name: ${COMPOSE_PROJECT_NAME}_solr
+        ports:
+            - "8983:8983"
+        volumes:
+            #- ./config/solr:/opt/solr/home
+            #- ./data/solr/:/opt/solr/data
+            #- ./logs/solr/:/var/www/site/ezpublish_legacy/extension/ezfind/java/logs
+            - ./site/:/var/www/site
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        cap_add:
+            - SYS_PTRACE
+
+    varnish:
+        build: images/varnish
+        hostname: varnish
+        container_name: ${COMPOSE_PROJECT_NAME}_varnish
+        ports:
+            - "8080:80"
+        volumes:
+            - ./config/varnish/:/etc/varnish/conf.d
+            - ./logs/varnish/:/var/log/varnish
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        cap_add:
+            - SYS_PTRACE
+            # varnish init daemon wants to set ulimits
+            - SYS_RESOURCE
+
+    nginx:
+        build: images/nginx
+        hostname: nginx
+        container_name: ${COMPOSE_PROJECT_NAME}_nginx
+        ports:
+            - "443:443"
+            - "8081:80"
+        volumes:
+            # @todo mount volume to sites-available and loop on all files found, linking them to /etc/apache2/sites-enabled...
+            - ./config/nginx/sites-available/:/etc/nginx/sites-enabled
+            - ./config/nginx/ssl/:/etc/nginx/ssl
+            - ./logs/nginx/:/var/log/nginx
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        cap_add:
+            - SYS_PTRACE
+
+    ### DEV Tools Containers
+
+    controlpanel:
+        build: images/controlpanel
+        hostname: controlpanel
+        container_name: ${COMPOSE_PROJECT_NAME}_controlpanel
+        ports:
+            - "88:88"
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+
+    # official dockerui image
+    dockerui:
+        image: uifd/ui-for-docker
+        hostname: dockerui
+        container_name: ${COMPOSE_PROJECT_NAME}_dockerui
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+        privileged: true
+
+    maildev:
+        build: images/maildev
+        hostname: maildev
+        container_name: ${COMPOSE_PROJECT_NAME}_maildev
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local
+
+    # official phpmyadmin image
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        hostname: phpmyadmin
+        container_name: ${COMPOSE_PROJECT_NAME}_phpmyadmin
+        env_file:
+            - docker-compose.env
+            - docker-compose.env.local

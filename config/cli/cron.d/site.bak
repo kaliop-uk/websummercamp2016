@@ -1,0 +1,4 @@
+# cronjobs
+
+# NB: the Sf env to use has to be set in the file /home/site/.cron_env
+15 * * * * cd /var/www/site/www && ./vendor/bin/drush --uri=www.kaliop.co.uk.dev cron >> /var/log/php/crontab.log

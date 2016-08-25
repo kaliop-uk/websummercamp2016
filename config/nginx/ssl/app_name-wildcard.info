@@ -1,0 +1,59 @@
+SHA1 Fingerprint=DB:BC:62:F9:21:76:7B:F7:E4:DE:D8:8F:9C:67:C7:1A:B1:F6:DA:62
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            a3:b2:e7:f3:a5:02:1b:0e
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=GB, L=London, O=Kaliop UK Ltd, CN=*.deploy.websc/emailAddress=ggiunta@kaliop.com
+        Validity
+            Not Before: Aug 25 22:36:55 2016 GMT
+            Not After : Aug 23 22:36:55 2026 GMT
+        Subject: C=GB, L=London, O=Kaliop UK Ltd, CN=*.deploy.websc/emailAddress=ggiunta@kaliop.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:94:a6:00:6c:3a:f7:5a:3f:94:2c:b7:90:22:57:
+                    85:45:a9:71:4a:be:ff:5c:af:ed:01:40:64:38:50:
+                    61:cd:67:de:84:bc:bd:16:0c:f2:53:a6:a1:c1:72:
+                    21:b4:39:6d:e6:47:48:bd:8c:d6:08:80:c8:03:8d:
+                    ad:fd:fb:d3:aa:ff:60:77:e2:c0:0c:f6:f3:f8:f3:
+                    9d:26:90:ed:1f:db:5d:42:24:4c:f5:e7:35:67:96:
+                    53:89:8d:02:a5:1f:7e:a5:34:52:93:01:3c:ee:0c:
+                    f1:af:ae:56:e7:68:30:57:14:71:da:1d:ec:4d:ee:
+                    6c:f4:f9:76:a8:2b:0c:32:48:a4:53:a1:97:35:1c:
+                    55:c9:6e:d2:d2:45:51:0b:bc:bd:b0:d2:28:2a:e5:
+                    b8:73:09:5a:a3:c0:27:bf:39:9e:10:1c:52:74:54:
+                    54:73:dd:2f:57:21:ae:5e:43:9c:db:23:8b:a9:0d:
+                    5a:22:b3:56:69:7a:19:ac:18:b7:ee:61:12:4a:40:
+                    17:ed:12:05:29:95:db:5b:ab:31:70:51:71:81:8e:
+                    c3:74:92:03:fd:f6:4e:d8:e8:47:46:98:75:6e:2f:
+                    ad:01:ad:a0:58:c7:1e:0b:64:6d:15:81:95:b4:45:
+                    e7:81:fe:3b:8b:11:5a:ea:36:82:ea:8a:e4:62:a9:
+                    84:d7
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                CD:94:76:92:E5:D0:3E:AB:11:02:1C:5D:D0:94:64:08:E5:F3:4C:33
+            X509v3 Authority Key Identifier: 
+                keyid:CD:94:76:92:E5:D0:3E:AB:11:02:1C:5D:D0:94:64:08:E5:F3:4C:33
+
+            X509v3 Basic Constraints: 
+                CA:TRUE
+    Signature Algorithm: sha1WithRSAEncryption
+         8b:11:8e:8f:53:ac:b5:2e:39:51:42:81:a4:a5:99:4b:ea:75:
+         fe:54:ac:89:9d:d0:23:7a:eb:8b:54:59:d3:27:66:14:ad:d4:
+         a0:cf:d9:28:69:13:d2:73:11:2a:4f:58:76:3f:c9:10:d9:0e:
+         4d:c5:af:c2:0b:2d:08:c5:b8:90:bc:7a:26:bd:10:4c:ce:c4:
+         d6:c4:3c:9f:c4:96:77:e0:9e:6b:13:a4:59:df:36:4b:6b:1f:
+         57:18:9b:44:9c:67:fd:3a:25:53:8f:69:66:e9:33:b8:0f:87:
+         12:22:d1:dd:16:d1:cf:06:24:99:ff:6c:77:71:38:76:7b:f9:
+         8c:f4:21:60:69:ec:c1:b3:dd:74:23:04:10:09:e8:5f:14:58:
+         62:fd:7a:f5:25:41:87:8e:80:8b:c1:47:22:fb:04:ed:39:40:
+         4b:5f:b3:e6:3f:dc:ba:50:f2:9f:a1:62:1f:b5:26:7b:37:48:
+         1a:0f:90:64:00:fd:36:a6:4c:19:b9:e1:f3:b3:fa:a9:e0:04:
+         36:80:a0:43:76:7c:8a:7c:3c:53:4b:2b:4f:da:48:f5:8f:73:
+         43:4e:df:ea:98:c4:82:e0:24:5f:bf:af:c3:d4:70:a9:09:95:
+         dd:ed:0f:a7:c9:8c:28:e1:14:36:35:e6:a6:aa:2f:d3:89:7a:
+         fd:10:55:c9

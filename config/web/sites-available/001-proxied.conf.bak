@@ -1,0 +1,48 @@
+# An apache vhost, listening on one IP address:
+# port 8080: 'test' environment, to be accessed via a reverse proxy
+
+Listen 8080
+
+<VirtualHost *:8080>
+    ServerName kaliop.ko.uk.dev
+    ServerAlias *.kaliop.ko.uk.dev *.kaliop.ko.uk.staging
+
+    ServerAdmin notifications-uk@kaliop.com
+    DocumentRoot /var/www/site/www
+    DirectoryIndex index.php
+
+    LogLevel warn
+
+    # add hostname to logs, as well as some data coming from php
+    LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{Host}i\" \"mem: %{php_mem_usage}n\" \"secs: %T\"" proxy
+
+    ErrorLog ${APACHE_LOG_DIR}/proxied-site_error.log
+    CustomLog ${APACHE_LOG_DIR}/proxied-site_access.log proxy
+
+    SetEnvIf Request_Method .* VARNISH_PROXIED=1
+
+    ### The official Apache Vhost from eZPublish follows (parts of it in the included file)
+
+    # NB: Do NOT use SetEnv here, as it is executed after mod_rewrite! SetEnvIf instead is executed Before!
+    SetEnvIf Request_Method .* ENVIRONMENT=${SYMFONY_ENV_WITHVARNISH}
+
+    #SetEnv USE_APC_CLASSLOADER 0
+
+    #SetEnv APC_CLASSLOADER_PREFIX "ezpublish"
+
+    SetEnvIf Request_Method .* USE_DEBUGGING=0
+
+    SetEnv USE_HTTP_CACHE 0
+
+    # Can not use a hostname :-( so we inject it via bootstrap.sh
+    SetEnv TRUSTED_PROXIES "${SYMFONY_ENV_TRUSTEDPROXIES}"
+
+    # An alternative: use htaccess
+    Include sites-available/drupal-htaccess.conf
+
+    # Uncomment to debug rewrite rules
+    #<IfModule mod_rewrite.c>
+    #    LogLevel warn rewrite:trace3
+    #</IfModule>
+
+</VirtualHost>
