@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
-### Add the (possibly) missing bts to the Netgen VM so that it can be accessed from the host machine
+# Add the (possibly) missing bits to the VM prepared by Netgen so that it can be accessed from the host machine
+#
+# To be run as root
 
 # ssh
 
-sudo apt-get install -y -qq openssh-server samba
+apt-get install -y -qq openssh-server samba
 
 # firewall
 
-sudo ufw disable
+ufw disable
 
 # samba
 
-sudo cat <<EOT >> /etc/samba/smb.cfg
+cat <<EOT >> /etc/samba/smb.cfg
 
 [www]
     path = /var/www
@@ -26,6 +28,6 @@ sudo cat <<EOT >> /etc/samba/smb.cfg
 
 EOT
 
-sudo echo -ne "websc\nwebsc\n" | smbpasswd -a -s nwebsc
+echo -ne "websc\nwebsc\n" | smbpasswd -a -s nwebsc
 
-sudo service smbd restart
+service smbd restart
