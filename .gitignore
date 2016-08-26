@@ -35,6 +35,7 @@
 /site/bin/phpunit
 /site/bin/security-checker
 /site/bin/ezp5installer.php
+/site/bin/php-parse
 
 /site/ezpublish/config/parameters.yml
 /site/ezpublish/cache/
@@ -42,7 +43,7 @@
 /site/ezpublish/bootstrap.php.cache
 /site/ezpublish/tmp/
 
-/site/ezpublish_lega# cy/
+/site/ezpublish_legacy/
 /site/vendor/
 
 /site/web/index_rest.php
@@ -59,4 +60,4 @@
 /site/web/.htaccess
 /site/web/clearopcache.php
 
-# /site/composer.phar
+/site/composer
