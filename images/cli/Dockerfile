@@ -17,7 +17,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     openssl \
     curl \
     git \
-    vim;
+    vim \
+    iputils-ping;
 
 # Configure locale
 # q: for what is the locale setup needed ?
