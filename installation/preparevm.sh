@@ -20,8 +20,8 @@ cat <<EOT >> /etc/samba/smb.cfg
     path = /var/www
     browseable = yes
     read only = no
-    force user = user
-    force group = www-data
+    force user = websc
+    force group = www-websc
     create mask = 0664
     follow symlinks = yes
     wide links = yes

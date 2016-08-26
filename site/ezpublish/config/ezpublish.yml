@@ -1,7 +1,7 @@
 doctrine:
     dbal:
         connections:
-            eng_repository_connection:
+            ezdeploy_repository_connection:
                 driver: pdo_mysql
                 host: mysql
                 user: user_ezdeploy
@@ -13,25 +13,23 @@ ezpublish:
         enabled: true
         path: /usr/bin/convert
     repositories:
-        eng_repository:
+        ezdeploy_repository:
             engine: legacy
-            connection: eng_repository_connection
+            connection: ezdeploy_repository_connection
     siteaccess:
-        default_siteaccess: eng
+        default_siteaccess: ezdeploy_site
         list:
             - ezdeploy_site
-            - eng
             - ezdeploy_site_admin
         groups:
-            ezdemo_site_group:
+            ezdeploy_site_group:
                 - ezdeploy_site
-                - eng
                 - ezdeploy_site_admin
         match:
             URIElement: '1'
     system:
-        ezdemo_site_group:
-            repository: eng_repository
+        ezdeploy_site_group:
+            repository: ezdeploy_repository
             languages:
                 - eng-GB
             var_dir: var/ezdemo_site
