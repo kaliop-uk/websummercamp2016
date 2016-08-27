@@ -1,5 +1,15 @@
 <?php /* #?ini charset="utf-8"?
 
+[DatabaseSettings]
+DatabaseImplementation=ezmysqli
+Server=mysql
+Port=
+User=user_ezdeploy
+Password=NotSoSecret
+Database=ezdeploy
+Charset=
+Socket=disabled
+
 [ExtensionSettings]
 ActiveExtensions[]
 ActiveExtensions[]=ezjscore
@@ -14,7 +24,10 @@ ActiveExtensions[]=ezie
 ActiveExtensions[]=ezodf
 ActiveExtensions[]=ezprestapiprovider
 ActiveExtensions[]=ezmultiupload
-ActiveExtensions[]=ezautosave
+# Disabled as it slows down demos and workshops
+#ActiveExtensions[]=ezautosave
+
+ActiveExtensions[]=ezfind
 ActiveExtensions[]=ggsysinfo
 ActiveExtensions[]=ezdbintegrity
 

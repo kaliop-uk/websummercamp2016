@@ -1,3 +1,14 @@
 imports:
     -
         resource: ezpublish.yml
+
+doctrine:
+    dbal:
+        connections:
+            ezdeploy_repository_connection:
+                driver: pdo_mysql
+                host: mysql
+                user: user_ezdeploy
+                password: NotSoSecret
+                dbname: ezdeploy
+                charset: UTF8
