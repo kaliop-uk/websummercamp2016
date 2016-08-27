@@ -1,2 +1,15 @@
 imports:
     - { resource: ezpublish_dev.yml }
+
+ezpublish:
+    http_cache:
+        # As of 5.4 only use "http"
+        # "single_http" and "multiple_http" are deprecated but will still work.
+        purge_type: http
+
+    system:
+        # Use a group which includes both frontend AND backend siteaccesses
+        cis_group:
+            http_cache:
+                # Fill in your Varnish server(s) address(es).
+                purge_servers: [http://varnish:80]
