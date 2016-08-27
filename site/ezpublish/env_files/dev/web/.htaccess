@@ -1,0 +1,178 @@
+    ### htaccess for DEV env
+
+    # Allow ONLY TRUSTED IPS to send calls to clean the OPCache
+    RewriteCond %{REMOTE_ADDR} ^172\.18\.0\.
+    RewriteRule ^clearopcache.php - [L]
+
+    # NB: we have to leave out the indented ones and set them in the vhost config
+
+        #LogLevel warn
+        # add hostname to logs
+        #LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{Host}i\"" proxy
+        #ErrorLog ${APACHE_LOG_DIR}/proxied-site_error.log
+        #CustomLog ${APACHE_LOG_DIR}/proxied-site_access.log proxy
+
+    ### The official Apache Vhost from eZPublish follows
+
+    # Here we do set the env based on the presence of varnish
+    # note: we do not test for https proto, as varnish might be accessed directly
+    # note: we might be overriding the values coming from the vhost...
+
+    # NB: Do NOT use SetEnv here, as it is executed after mod_rewrite! SetEnvIf instead is executed Before!
+    SetEnvIf Request_Method .* ENVIRONMENT=dev
+    SetEnvIf VARNISH_PROXIED 1 ENVIRONMENT=demo
+
+    #SetEnv USE_APC_CLASSLOADER 0
+
+    #SetEnv APC_CLASSLOADER_PREFIX "ezpublish"
+
+    SetEnvIf Request_Method .* USE_DEBUGGING=1
+    SetEnvIf VARNISH_PROXIED 1 USE_DEBUGGING=0
+
+    # we only force no-sf-cache when there is varnish in front. When there is none, it is decided based on env
+    SetEnvIf VARNISH_PROXIED 1 USE_HTTP_CACHE 0
+
+    # Can not use a hostname :-( so we inject it via env vars
+    SetEnv TRUSTED_PROXIES "${SYMFONY_ENV_TRUSTEDPROXIES}"
+
+    # Applying expiry headers based on subdirs is not a piece of cake in an .htaccess...
+    # Thanks http://stackoverflow.com/questions/7812407/conditionally-setting-cache-headers-in-apache
+    #<IfModule mod_headers.c>
+
+        RewriteCond %{REQUEST_URI} ^/var/[^/]+/storage/images/.*
+        RewriteRule .* - [E=EXPIRYHEADERS_STORAGEIMAGES:1,L]
+
+        RewriteCond %{REQUEST_URI} ^/extension/[^/]+/design/[^/]+/(stylesheets|images|javascripts?|flash)/.*
+        RewriteRule .* - [E=EXPIRYHEADERS_EXTENSIONDESIGN:1,L]
+
+        RewriteCond %{REQUEST_URI} ^/extension/[^/]+/design/[^/]+/lib/.*
+        RewriteRule .* - [E=EXPIRYHEADERS_DESIGNLIB:1,L]
+
+        RewriteCond %{REQUEST_URI} ^/design/[^/]+/(stylesheets|images|javascripts?|lib|flash)/.*
+        RewriteRule .* - [E=EXPIRYHEADERS_DESIGN:1,L]
+
+        RewriteCond %{REQUEST_URI} ^/share/icons/.*
+        RewriteRule .* - [E=EXPIRYHEADERS_ICONS:1,L]
+
+        RewriteCond "%{ENV:USE_DEBUGGING}" =0
+        RewriteCond %{REQUEST_URI} ^/(css|js)/.*
+        RewriteRule .* - [E=EXPIRYHEADERS_ASSETIC:1,L]
+
+        RewriteCond "%{ENV:USE_DEBUGGING}" =0
+        RewriteCond %{REQUEST_URI} ^/(bundles)/.*
+        RewriteRule .* - [E=EXPIRYHEADERS_BUNDLES:1,L]
+
+        # eZ Publish appends the version number to image URL (ezimage
+        # datatype) so when an image is updated, its URL changes too
+        # 90 days
+        Header set Cache-Control "max-age=7776000" env=EXPIRYHEADERS_STORAGEIMAGES
+
+        # A good optimization if you don't change your design often
+        # 1 day
+        Header set Cache-Control "max-age=86400" env=EXPIRYHEADERS_EXTENSIONDESIGN
+
+        # Libraries get a new url (version number) on updates
+        # 90 days
+        Header set Cache-Control "max-age=7776000" env=EXPIRYHEADERS_DESIGNLIB
+
+        # Same as above for bundled eZ Publish designs
+        # 90 days
+        Header set Cache-Control "max-age=7776000" env=EXPIRYHEADERS_DESIGN
+
+        # Icons as used by admin interface, barely change
+        # 90 days
+        Header set Cache-Control "max-age=7776000" env=EXPIRYHEADERS_ICONS
+
+        # Assetic stuff - we can intruct it to generate new urls on deploy
+        # 90 days
+        Header set Cache-Control "max-age=7776000" env=EXPIRYHEADERS_ASSETIC
+
+        # Bundle stuff - treat it like design
+        # 1 day
+        Header set Cache-Control "max-age=86400" env=EXPIRYHEADERS_BUNDLES
+
+    #</IfModule>
+
+
+    # NB: we NEED the rewrite reules in places, so let's crash and burn if Apache does not have mod_rewrite on
+    #<IfModule mod_rewrite.c>
+        RewriteEngine On
+
+        # Disallow access if the client is not using https (both direct access and terminated by Nginx supported)
+        #RewriteCond %{HTTPS} off
+        #RewriteCond %{HTTP:X-Forwarded-Proto} !https
+        #RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+        # Uncomment in FastCGI mode or when using PHP-FPM, to get basic auth working.
+        RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+        # Needed for ci testing, remove in prod.
+        #RewriteCond %{REQUEST_URI} ^/php5-fcgi(.*)
+        #RewriteRule . - [L]
+
+        # v1 rest API is on Legacy
+        RewriteRule ^api/[^/]+/v1/ /index_rest.php [L]
+
+        # If using cluster, uncomment the following two lines:
+        ## For 5.4 and higher:
+        #RewriteRule ^/var/([^/]+/)?storage/images(-versioned)?/.* /index.php [L]
+        #RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* /index_cluster.php [L]
+        ## Versions prior to 5.4:
+        #RewriteRule ^/var/([^/]+/)?storage/images(-versioned)?/.* /index_cluster.php [L]
+        #RewriteRule ^/var/([^/]+/)?cache/(texttoimage|public)/.* /index_cluster.php [L]
+
+        RewriteRule ^var/([^/]+/)?storage/images(-versioned)?/.* - [L]
+        RewriteRule ^var/([^/]+/)?cache/(texttoimage|public)/.* - [L]
+        # Added for ggsysinfo extension
+        RewriteRule ^var/([^/]+/)cache/sysinfo/.* - [L]
+        RewriteRule ^design/[^/]+/(stylesheets|images|javascript|fonts)/.* - [L]
+        RewriteRule ^share/icons/.* - [L]
+        RewriteRule ^extension/[^/]+/design/[^/]+/(stylesheets|flash|images|lib|javascripts?)/.* - [L]
+        RewriteRule ^packages/styles/.+/(stylesheets|images|javascript)/[^/]+/.* - [L]
+        RewriteRule ^packages/styles/.+/thumbnail/.* - [L]
+        RewriteRule ^var/storage/packages/.* - [L]
+
+        # Makes it possible to place your favicon at the root of your
+        # eZ Publish instance. It will then be served directly.
+        #RewriteRule ^favicon\.ico - [L]
+        RewriteRule ^favicon\.ico design/standard/images/favicon.ico [L]
+
+        # Uncomment the line below if you want your favicon be served
+        # from the standard design. You can customize the path to
+        # favicon.ico by changing /design/standard/images/favicon\.ico
+        #RewriteRule ^/favicon\.ico /design/standard/images/favicon.ico [L]
+        RewriteRule ^design/standard/images/favicon\.ico - [L]
+
+        # Give direct access to robots.txt for use by crawlers (Google,
+        # Bing, Spammers..)
+        # Removing for use by novaseo bundle
+        #RewriteRule ^robots\.txt - [L]
+
+        # Platform for Privacy Preferences Project ( P3P ) related files
+        # for Internet Explorer
+        # More info here : http://en.wikipedia.org/wiki/P3p
+        RewriteRule ^w3c/p3p\.xml - [L]
+
+        # Uncomment the following lines when using popup style debug in legacy
+        #RewriteRule ^/var/([^/]+/)?cache/debug\.html.* - [L]
+
+        # Following rule is needed to correctly display assets from eZ Publish5 / Symfony bundles
+        RewriteRule ^bundles/ - [L]
+
+        # Additional Assetic rules for node-debug envs, remember to run php ezpublish/console assetic:dump --env=<env>
+        RewriteCond "%{ENV:USE_DEBUGGING}" =0
+        RewriteRule ^(css|js)/.*\.(css|js) - [L]
+
+        # Conditions for enabling webdav and soap interfaces from legacy
+        ## Symlink files into your web folder and correct domain names to be valid server aliases
+        #RewriteCond %{HTTP_HOST} ^webdav\..*
+        #RewriteRule ^(.*) /webdav.php [L]
+        #RewriteCond %{HTTP_HOST} ^soap\..*
+        #RewriteRule ^(.*) /soap.php [L]
+
+        # For 5.x versions prior to 5.2, enable this to use dev env based on ENVIRONMENT variable set above
+        #RewriteCond %{ENV:ENVIRONMENT} "dev"
+        #RewriteRule .* /index_dev.php [L]
+
+        RewriteRule .* index.php
+    #</IfModule>

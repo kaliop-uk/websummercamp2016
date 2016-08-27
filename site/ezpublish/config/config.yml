@@ -2,6 +2,10 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+# the following params do not change for each environment, so we store them here
+parameters:
+    locale_fallback: en
+
 framework:
     esi:             ~
     #translator:      { fallback: "%locale_fallback%" }

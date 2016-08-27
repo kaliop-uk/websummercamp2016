@@ -1,0 +1,9 @@
+# This file is auto-generated during the composer install
+parameters:
+    mailer_transport: smtp
+    mailer_host: maildev
+    mailer_user: null
+    mailer_password: null
+    debug_toolbar: false
+    debug_redirects: false
+    use_assetic_controller: false

@@ -31,6 +31,8 @@ php stack.php run
 
 # install composer
 docker exec ezdeploy_cli su site -c './bin/getcomposer.sh'
+
+# install dependencies
 docker exec ezdeploy_cli su site -c 'composer install --no-scripts'
 
 # fix character set of default db created by the standard docker container
@@ -40,8 +42,11 @@ docker exec ezdeploy_cli su site -c 'mysql -hmysql -uuser_ezdeploy -pNotSoSecret
 # import database
 docker exec ezdeploy_cli su site -c './bin/importdb.sh dev'
 
-# symlink legacy settings, assets etc...
+# symlink legacy settings, assets, .htaccess, etc...
+# (fully automate the composer-install by a ugly hack)
+sed -i "s/__token_extras::begin__.*__token_extras::end__/ezpublish-asset-dump-env\":\"demo/g" composer.json
 docker exec ezdeploy_cli su site -c 'composer run-script post-install-cmd'
+git checkout -- composer.json
 
 # reindex content
 docker exec ezdeploy_cli su site -c 'php ezpublish/console ezpublish:legacy:script bin/php/updatesearchindex.php --siteaccess=ezdeploy_site_admin --clean'

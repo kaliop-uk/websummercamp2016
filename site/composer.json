@@ -99,6 +99,6 @@
         "incenteev-parameters": {
             "file": "ezpublish/config/parameters.yml"
         },
-        "__token_extras::begin__": "this can be overwritten by deployments scripts who need data in the extra section... __token_extras::end__"
+        "__token_extras::begin__": "this can be overwritten by deployments scripts whhich need data in the extra section... __token_extras::end__"
     }
 }
