@@ -4,6 +4,12 @@
 #
 # To be run as root
 
+ID="$(id -u)"
+if [ $ID -ne 0 ]; then
+    echo "Please run this script as root"
+    exit 1
+fi
+
 # ssh
 
 apt-get install -y -qq openssh-server samba
@@ -31,3 +37,7 @@ EOT
 echo -ne "websc\nwebsc\n" | smbpasswd -a -s nwebsc
 
 service smbd restart
+
+# disabling default starting into GUI mode:
+
+# see http://ask.xmodulo.com/boot-into-command-line-ubuntu-debian.html

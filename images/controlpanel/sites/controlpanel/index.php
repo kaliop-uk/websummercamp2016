@@ -26,6 +26,13 @@
         <li><a href="/varnish/html/">Varnish</a></li>
     </ul>
 
-    <p>credentials for Varnish: varnish / CacheMeIfYouCan</p>
+    <p>Credentials for Varnish: varnish / CacheMeIfYouCan</p>
+<?php
+    if (isset($_SERVER["MYSQL_ROOT_PASSWORD"])) {
+        echo '<p>Credentials for the database (phpmyadmin): root / '.htmlspecialchars($_SERVER["MYSQL_ROOT_PASSWORD"]) . '</p>';
+    } else {
+        echo '<p>Credentials for the database (phpmyadmin): look in the docker.compose.env or docker.compose.env.local file</p>';
+    }
+?>
 </body>
 </html>

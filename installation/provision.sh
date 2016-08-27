@@ -5,12 +5,23 @@
 # 1. build docker images
 # 2. install ezpublish
 #
-# It should be run only once, **as root**
+# It should be run only once
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ID="$(id -u)"
+if [ $ID -ne 0 ]; then
+    echo "The script might ask you for your account password a couple of times, in order to stop running services"
+fi
 
-service apache2 stop
-service mysql stop
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+
+STATUS="$(service apache2 status)"
+if [ $ID -eq 0 ]; then
+    service apache2 stop
+fi
+STATUS="$(service mysql status)"
+if [ $ID -eq 0 ]; then
+    service mysql stop
+fi
 
 cd $DIR
 
