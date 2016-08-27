@@ -22,7 +22,7 @@
         <li><a href="/memcached/">Memcache</a></li>
         <li><a href="/nginx/">Nginx</a></li>
         <li><a href="/pma/index.php">PhpMyAdmin</a></li>
-        <li><a href="/solr/solr/">Solr</a></li>
+        <li><a href="/solr/">Solr</a></li>
         <li><a href="/varnish/html/">Varnish</a></li>
     </ul>
 
