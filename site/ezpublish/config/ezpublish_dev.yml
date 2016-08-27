@@ -12,3 +12,17 @@ doctrine:
                 password: NotSoSecret
                 dbname: ezdeploy
                 charset: UTF8
+
+stash:
+    caches:
+        default:
+            drivers: [ Memcache ]
+            inMemory: true
+            registerDoctrineAdapter: false
+            Memcache:
+                prefix_key: ezdeploy_
+                retry_timeout: 1
+                servers:
+                    -
+                        server: memcached
+                        port: 11211
