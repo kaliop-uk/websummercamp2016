@@ -20,21 +20,21 @@ ufw disable
 
 # samba
 
-cat <<EOT >> /etc/samba/smb.cfg
+cat <<EOT >> /etc/samba/smb.conf
 
 [www]
     path = /var/www
     browseable = yes
     read only = no
     force user = websc
-    force group = www-websc
+    force group = websc
     create mask = 0664
     follow symlinks = yes
     wide links = yes
 
 EOT
 
-echo -ne "websc\nwebsc\n" | smbpasswd -a -s nwebsc
+echo -ne "websc\nwebsc\n" | smbpasswd -a -s websc
 
 service smbd restart
 
