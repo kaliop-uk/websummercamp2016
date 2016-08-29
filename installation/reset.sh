@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# remove all docker containers and images
+# Bring back the computer (Docker host) to a pristine status:
+# remove all docker containers and images and data created at runtime
 
 echo Removing all docker containers and images...
 

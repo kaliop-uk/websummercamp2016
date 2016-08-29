@@ -6,6 +6,8 @@
 # 2. install ezpublish
 #
 # It should be run only once
+#
+# NB: it will leave the docker containers running and the mysql and apache services on the host machine stopped
 
 ID="$(id -u)"
 if [ $ID -ne 0 ]; then
@@ -38,6 +40,9 @@ docker exec ezdeploy_cli su site -c './bin/getcomposer.sh'
 
 # install dependencies
 docker exec ezdeploy_cli su site -c 'composer install --no-scripts'
+
+# it seems that the mysql db might take a while to become available...
+sleep 60
 
 # fix character set of default db created by the standard docker container
 docker exec ezdeploy_cli su site -c 'mysql -hmysql -uuser_ezdeploy -pNotSoSecret -e "drop database ezdeploy"'
