@@ -16,12 +16,14 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
+# note: we could find the process listening on ports 443 and 80 instead of just stopping Apache...
 STATUS="$(service apache2 status)"
-if [ $ID -eq 0 ]; then
+if [ $STATUS -eq 0 ]; then
     service apache2 stop
 fi
+# note: stopping mysql is not mandatory, we do it to save on resources
 STATUS="$(service mysql status)"
-if [ $ID -eq 0 ]; then
+if [ $STATUS -eq 0 ]; then
     service mysql stop
 fi
 

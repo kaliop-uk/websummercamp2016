@@ -25,3 +25,6 @@ rm -rf site/ezpublish/cache/*
 rm -rf site/ezpublish/logs/*
 rm -rf site/ezpublish_legacy/var/log/*
 rm -rf site/ezpublish_legacy/var/cache/*
+rm -rf site/ezpublish_legacy/var/ezdemo_site/log/*
+rm -rf site/ezpublish_legacy/var/ezdemo_site/cache/*
+rm -rf site/ezpublish_legacy/var/ezdemo_site/storage/*
