@@ -25,6 +25,10 @@ fi
 
 cd $DIR
 
+if [ -f docker-compose.env.local ]; then
+    touch docker-compose.env.local
+fi
+
 php stack.php build
 
 php stack.php run
@@ -44,9 +48,9 @@ docker exec ezdeploy_cli su site -c './bin/importdb.sh dev'
 
 # symlink legacy settings, assets, .htaccess, etc...
 # (fully automate the composer-install by a ugly hack)
-sed -i "s/__token_extras::begin__.*__token_extras::end__/ezpublish-asset-dump-env\":\"demo/g" composer.json
+sed -i "s/__token_extras::begin__.*__token_extras::end__/ezpublish-asset-dump-env\":\"demo/g" site/composer.json
 docker exec ezdeploy_cli su site -c 'composer run-script post-install-cmd'
-git checkout -- composer.json
+cd site && git checkout -- composer.json; cd ..
 
 # reindex content
 docker exec ezdeploy_cli su site -c 'php ezpublish/console ezpublish:legacy:script bin/php/updatesearchindex.php --siteaccess=ezdeploy_site_admin --clean'
