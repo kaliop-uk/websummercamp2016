@@ -64,5 +64,6 @@ cd site && git checkout -- composer.json; cd ..
 # reindex content
 docker exec ezdeploy_cli su site -c 'php ezpublish/console ezpublish:legacy:script bin/php/updatesearchindex.php --siteaccess=ezdeploy_site_admin --clean'
 
+echo
 echo "To continue: log on to http://deploy.websc/, http://deploy.websc/ezdeploy_site_admin, http://deploy.websc:88"
 echo "or execute 'docker exec -ti ezdeploy_cli su site'"

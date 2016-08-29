@@ -52,4 +52,8 @@ workshop, to avoid loosing time and clogging the hotel wifi.
 - at this point, if you have to attend other workshops before this one, you should stop the stack of Docker containers
   and bring back up the Apache and MySql services on the host computer
 
-  ./installation/
+        ./installation/suspend.sh
+
+  when this workshop will start, all you have to do is start the stack of Docker containers
+
+        ./installation/resume.sh
