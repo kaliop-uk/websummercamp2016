@@ -31,7 +31,7 @@ fi
 
 cd $DIR
 
-if [ -f docker-compose.env.local ]; then
+if [ ! -f docker-compose.env.local ]; then
     touch docker-compose.env.local
 fi
 
