@@ -1,12 +1,14 @@
-KUKCV - Corporate site - Development Environment
-================================================
+eZPublish Development Environment on Docker
+===========================================
 
 This repository contains all the Docker images and build files needed to create and use a Development Environment; it
 works for a staging/uat environment as well.
 
-
 It is to be used in conjunction with another repository which will contain the Application source code.
-The Application source code should be installed in the 'site' directory within the Development Environment root directory.
+The Application source code should be installed in the 'site' directory within the Development Environment root directory;
+
+for ease of usage during the Web Summer Camp workshop, the application source code has been committed to the same
+git repository, in the 'site' directory.
 
 
 ## System Requirements
@@ -37,16 +39,8 @@ The following ports have to be *not in use* on the host machine:
 
 The environment is split into containers which execute each one of the main services.
 
-All containers are built from the Debian Jessie 8 official docker image as this should reflect the software stack
-installed on the UAT and Production environments.
-
-Each container image has a Readme file describing it in detail, in the same folder as the image:
-
-* [web](images/web/Readme.md)
-* [cli](images/cli/Readme.md)
-* [varnish](images/varnish/Readme.md)
-* [mysql](images/mysql/Readme.md)
-* [nginx](images/nginx/Readme.md)
+All containers are built from the Ubuntu 15.10 official docker image to minimize the size of the image when
+installed in the Summer Camp VM.
 
 The following data is stored on the host machine (and mounted as volumes in the containers):
 
@@ -57,37 +51,37 @@ The following data is stored on the host machine (and mounted as volumes in the 
 
 Here is how the containers listening ports are set up (related to web access only):
 
-    +-----------------------------------+
-    |                                   |
-    | +------+  +-------+               |
-    | |      |  |       |               |
-    | |  web |  | mysql |               |
-    | |      |  |       |               |
-    | ++----++  +-------+               |
-    |  |    |                           |
-    |  80   8080                        |
-    |  |    |                           |
-    |  |    v                           |
-    |  |   ++--------+                  |
-    |  |   |         |                  |
-    |  |   | varnish |                  |
-    |  |   |         |                  |
-    |  |   +--+------+                  |
-    |  |      |                         |
-    |  |      80+--+                    |
-    |  |      |    v                    |
-    |  |      |   ++------+  +--------+ |
-    |  |      |   |       |  |        | |
-    |  |      |   | nginx |  | cpanel | |
-    |  |      |   |       |  |        | |
-    |  |      |   ++-----++  ++-----+ | |
-    |  |      |    |     |    |         |
-    |  |      |    443   80   88        |
-    |  |      |    |     |    |         |
-    |  v      v    v     v    v         |
-    +--+------+----+-----+----+---------+
+    +---------------------------------------------+
+    |                                             |
+    | +-----+ +-------+ +------+ +------+ +-----+ |
+    | |     | |       | |      | |      | |     | |
+    | | web | | mysql | | memc | | solr | | cli | |
+    | |     | |       | |      | |      | |     | |
+    | ++---++ +-------+ +------+ +------+ +-----+ |
+    |  |   |                                      |
+    |  80  8080              \|/   \|/            |
+    |  |    |                 |     |             |
+    |  |    V                 |     V             |
+    |  |   ++--------+        |   +-+------+      |
+    |  |   |         |        |   |        |      |
+    |  |   | varnish |        |   | tools* |      |
+    |  |   |         |        |   |        |      |
+    |  |   +--+------+        |   ++-------+      |
+    |  |      |               |    |              |
+    |  |      80+--+          |    |              |
+    |  |      |    V          V    V              |
+    |  |      |   ++------+  ++-------+           |
+    |  |      |   |       |  |        |           |
+    |  |      |   | nginx |  | cpanel |           |
+    |  |      |   |       |  |        |           |
+    |  |      |   ++-----++  ++-------+           |
+    |  |      |    |     |    |                   |
+    |  |      |    443   80   88                  |
+    |  |      |    |     |    |                   |
+    |  V      V    V     V    V                   |
+    +--+------+----+-----+----+-------------------+
        |      |    |     |    |
-       v      v    v     v    v
+       V      V    V     V    V
        80     8080 443   8081 88
 
 
@@ -181,13 +175,7 @@ There are plenty of tutorials available on the internet. This is a good quicksta
     https://github.com/docker/docker/issues/18180#issuecomment-179002757.
     If you are running in virtualbox, setting your vcpu count to 2 might fix the problem...
 
-7. Clone the Application Source Repository
-
-    It should be cloned into </path/to/your/project/folder>/site
-
-        git clone ssh://git@stash.kaliop.net:7999/ku/kaliop-uk-website-2016.git /path/to/your/project/folder/site
-
-8. Set up the Application
+7. Set up the Application
 
     Follow the instructions in the Readme file of the application (*nb:* you will most likely have to start the
     containers for that, please read below for instructions)
