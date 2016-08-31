@@ -49,6 +49,10 @@ workshop, to avoid loosing time and clogging the hotel wifi.
     http://deploy.websc/ezdeploy_site_admin
     http://deploy.websc:88
 
+- if things are not ok, you can check the status of the Docker containers using
+
+        php stack.php ps
+
 - at this point, if you have to attend other workshops before this one, you should stop the stack of Docker containers
   and bring back up the Apache and MySql services on the host computer
 
