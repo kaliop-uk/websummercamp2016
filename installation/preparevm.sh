@@ -41,3 +41,18 @@ service smbd restart
 # disabling default starting into GUI mode:
 
 # see http://ask.xmodulo.com/boot-into-command-line-ubuntu-debian.html
+
+# Fix ls command not to use color
+
+mv /usr/bin/dircolors /usr/bin/dircolors.disabled
+
+# Fix prompt to be shorter (good for low-res projectors
+
+cat <<EOT >> /home/websc/.bashrc
+
+function pwdn {
+    pwd | awk -F\/ '{print $(NF-1),$(NF)}' | sed 's/ /\\//'
+}
+export PS1="\[\033[33m\]\$(pwdn 3)\[\033[0m\] \$ ";
+
+EOT
