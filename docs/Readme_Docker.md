@@ -31,7 +31,7 @@ The following ports have to be *not in use* on the host machine:
 * 88    a handy control-panel
 * 443   website via Nginx+Varnish (https)
 * 8080  website via Varnish
-* 8081  website via Nginx+Varnish (http)
+* 8081  website via Nginx+Varnish (http) - *note* currently disabled
 * 3307  mysql
 
 

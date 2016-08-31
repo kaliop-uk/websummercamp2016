@@ -46,7 +46,7 @@ workshop, to avoid loosing time and clogging the hotel wifi.
 - if all is well, you should be able to access the website at the following addresses:
 
     http://deploy.websc
-    http://deploy.websc//ezdeploy_site_admin
+    http://deploy.websc/ezdeploy_site_admin
     http://deploy.websc:88
 
 - at this point, if you have to attend other workshops before this one, you should stop the stack of Docker containers
