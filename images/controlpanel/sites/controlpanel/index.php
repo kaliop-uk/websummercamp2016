@@ -34,5 +34,11 @@
         echo '<p>Credentials for the database (phpmyadmin): look in the docker.compose.env or docker.compose.env.local file</p>';
     }
 ?>
+    <h3>Symfony environments made available to the Web container:</h3>
+    <ul>
+        <li>Direct access: <?php echo htmlspecialchars(getenv('SYMFONY_ENV_NOVARNISH')); ?></li>
+        <li>Accessed via varnish: <?php echo htmlspecialchars(getenv('SYMFONY_ENV_WITHVARNISH')); ?><</li>
+    </ul>
+
 </body>
 </html>

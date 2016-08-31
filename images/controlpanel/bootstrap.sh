@@ -34,6 +34,11 @@ chown -R site:site /var/lock/apache2
 
 echo [`date`] Modifying Apache configuration...
 
+# @todo improve this: if the container is bootstrapped many times, the envvars file will keep growing
+echo "# Config below added by bootstrap.sh" >> /etc/apache2/envvars
+echo "export SYMFONY_ENV_NOVARNISH=$SYMFONY_ENV_NOVARNISH" >> /etc/apache2/envvars
+echo "export SYMFONY_ENV_WITHVARNISH=$SYMFONY_ENV_WITHVARNISH" >> /etc/apache2/envvars
+
 a2dissite 000-default
 
 echo [`date`] Starting the service...
