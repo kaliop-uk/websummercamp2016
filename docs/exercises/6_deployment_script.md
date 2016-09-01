@@ -1,3 +1,3 @@
-Exercise 7: testing the deployment script
+Exercise 6: testing the deployment script
 =========================================
 
