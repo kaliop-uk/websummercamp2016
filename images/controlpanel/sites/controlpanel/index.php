@@ -36,8 +36,8 @@
 ?>
     <h3>Symfony environments made available to the Web container:</h3>
     <ul>
-        <li>Direct access: <?php echo htmlspecialchars(getenv('SYMFONY_ENV_NOVARNISH')); ?></li>
-        <li>Accessed via varnish: <?php echo htmlspecialchars(getenv('SYMFONY_ENV_WITHVARNISH')); ?><</li>
+        <li>Direct access: <b><?php echo htmlspecialchars(getenv('SYMFONY_ENV_NOVARNISH')); ?></b></li>
+        <li>Accessed via varnish: <b><?php echo htmlspecialchars(getenv('SYMFONY_ENV_WITHVARNISH')); ?></b></li>
     </ul>
 
 </body>

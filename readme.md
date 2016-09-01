@@ -45,9 +45,9 @@ workshop, to avoid loosing time and clogging the hotel wifi.
 
 - if all is well, you should be able to access the website at the following addresses:
 
+    http://deploy.websc:88
     http://deploy.websc
     http://deploy.websc/ezdeploy_site_admin
-    http://deploy.websc:88
 
 - if things are not ok, you can check the status of the Docker containers using
 

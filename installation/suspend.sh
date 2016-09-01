@@ -20,7 +20,7 @@ if [ $STATUS -ne 0 ]; then
     service apache2 start
 fi
 # note: stopping mysql is not mandatory, we do it to save on resources
-service apache2 status > /dev/null
+service mysql status > /dev/null
 STATUS=$?
 if [ $STATUS -ne 0 ]; then
     service mysql start
