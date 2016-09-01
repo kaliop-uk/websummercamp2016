@@ -27,6 +27,8 @@ Prerequisites: having created the 'uat' docker stack (exercise 1); having it run
         php bin/ezp5installer.php misc-files:install -o ezpublish/env_files
         # check that they have been deployed
         ls -la web
+        # do not forget to dump assets!
+        php ezpublish/console assetic:dump
         # exit the container
         exit
 
