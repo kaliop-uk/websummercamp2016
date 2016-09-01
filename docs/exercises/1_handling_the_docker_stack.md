@@ -41,6 +41,9 @@ Browse to:
 
 note: credentials for the admin interface are: admin/publish
 
+Question: which Symfony environment is being used?
+
+
 ## Task 2: Create a copy of the stack, to handle a new environment: UAT
 
 ### Create a copy of the stack
@@ -53,8 +56,9 @@ note: credentials for the admin interface are: admin/publish
 ### Set the new stack to use a different Symfony environment
 
     cd deploy_qa
-    printf "\nSYMFONY_ENV_NOVARNISH=uat\n" >>  docker-compose.env.local
-    
+    printf "\nSYMFONY_ENV_NOVARNISH=uat\n" >> docker-compose.env.local
+    printf "\nSYMFONY_ENV=uat\n" >> docker-compose.env.local
+
 ### (Re)build and start the stack
 
     php stack.php build
@@ -72,7 +76,7 @@ NB: this has to be done *from within the cli container*
     
     # (in the container)
         # edit line 22, replace 'dev' by 'uat'
-        sed -i 's/ENVIRONMENT=dev/ENVIRONMENT=uat/g'
+        sed -i 's/ENVIRONMENT=dev/ENVIRONMENT=uat/g' web/.htaccess
         # exit the container
         exit
 

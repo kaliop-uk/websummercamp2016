@@ -8,9 +8,10 @@ Prerequisites: having created the 'uat' docker stack (exercise 1); having it run
 
 ## Task 1: disable the debug mode for the Admin interface in the UAT environment
 
+    cd /var/www/summercamp/workshops/deploy_qa
+
 ### Create the per-environment config files (hint: debug mode is set in site.ini)
 
-    cd /var/www/summercamp/workshops/deploy_qa
     cd site/ezpublish/legacy_settings
     mkdir -p dev/override
     mkdir -p uat/override
@@ -26,6 +27,8 @@ Prerequisites: having created the 'uat' docker stack (exercise 1); having it run
     # (in the container)
         # deploy the settings
         php bin/ezp5installer.php legacy-settings:install --clean
+        # check that they have been deployed
+        ls -la settings/override
         # clear cache (optional)
         rm -rf ezpublish_legacy/var/cache/*
         rm -rf ezpublish_legacy/var/ezdemo_site/cache/*
