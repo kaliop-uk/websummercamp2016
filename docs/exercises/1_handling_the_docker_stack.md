@@ -90,7 +90,7 @@ What has happened ?
     cd site/ezpublish/config
     cp config_dev.yml config_uat.yml
     cp ezpublish_dev.yml ezpublish_uat.yml
-    cp parameters_dev.yml parameters_uat.yml
+    cp parameters_demo.yml parameters_uat.yml
     cp routing_demo.yml routing_uat.yml
 
     # patch them

@@ -9,7 +9,7 @@ ezpublish:
 
     system:
         # Use a group which includes both frontend AND backend siteaccesses
-        cis_group:
+        ezdeploy_site_group:
             http_cache:
                 # Fill in your Varnish server(s) address(es).
                 purge_servers: [http://varnish:80]

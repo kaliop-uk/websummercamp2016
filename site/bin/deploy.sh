@@ -74,7 +74,7 @@ php $DIR/ezp5installer.php http:request --key=parameters.opcache_purge_url
 
 # reindex. we always do it, in case any indexation setting has changed
 echo "Reindexing content..."
-php ezpublish/console ezpublish:legacy:script bin/php/updatesearchindex.php --siteaccess=cis_admin --clean
+php ezpublish/console ezpublish:legacy:script bin/php/updatesearchindex.php --siteaccess=ezdeploy_site_admin --clean
 
 # purge memcache (based on env settings)
 echo "Purging memcache..."
@@ -84,9 +84,9 @@ php $DIR/ezp5installer.php memcache:purge
 echo "Purging varnish..."
 if [ "dev" = "$ENV" ]; then
     # when deploying the 'dev' env, we clear varnish for the 'demo' env, as they run both on the same installation
-    php $DIR/ezp5installer.php varnish:purge --key=ezpublish.system.cis_group.http_cache.purge_servers --env=demo
+    php $DIR/ezp5installer.php varnish:purge --key=ezpublish.system.ezdeploy_site_group.http_cache.purge_servers --env=demo
 else
-    php $DIR/ezp5installer.php varnish:purge --key=ezpublish.system.cis_group.http_cache.purge_servers
+    php $DIR/ezp5installer.php varnish:purge --key=ezpublish.system.ezdeploy_site_group.http_cache.purge_servers
 fi
 
 # and, for good measure:
@@ -94,11 +94,11 @@ if [ "dev" = "$ENV" ]; then
     php ezpublish/console security:check
 fi
 
-# Tell NewRelic that we deployed. For UAT at the moment, later to be done for PROD only
-if [ "uatnbs" = "$ENV" ]; then
+# Tell NewRelic that we deployed
+if [ "prod" = "$ENV" ]; then
     REVISION=`git rev-parse HEAD`
-    curl -X POST --header 'x-api-key: 4849261b3c4a7d152a24705f3b1752d8eebace43ba817eb' \
-        -d "deployment[app_name]=Corporate/Intranet-UAT" \
+    curl -X POST --header 'x-api-key: 1234567890' \
+        -d "deployment[app_name]=WebSummerCamp2016/Deploy" \
         -d "deployment[revision]=$REVISION" \
         'https://api.newrelic.com/deployments.xml'
 fi

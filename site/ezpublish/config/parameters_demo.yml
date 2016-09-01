@@ -7,3 +7,6 @@ parameters:
     debug_toolbar: false
     debug_redirects: false
     use_assetic_controller: false
+
+    opcache_purge_url: http://web/clearopcache.php
+
