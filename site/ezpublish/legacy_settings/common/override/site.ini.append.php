@@ -79,3 +79,14 @@ AvailableViewModes[]=embed
 AvailableViewModes[]=embed-inline
 InlineViewModes[]
 InlineViewModes[]=embed-inline
+
+# Config for development environments
+[DebugSettings]
+DebugOutput=enabled
+AlwaysLog[]=warning
+AlwaysLog[]=debug
+AlwaysLog[]=notice
+AlwaysLog[]=strict
+
+[TemplateSettings]
+ShowUsedTemplates=enabled

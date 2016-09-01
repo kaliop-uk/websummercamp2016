@@ -1,6 +1,10 @@
 Exercise 1: handling the Docker stack
 =====================================
 
+Goals of the exercise:
+- getting acquainted with the Docker stack for eZPublish
+- learning how to deploy a copy of the stack to create a new environment: `uat`
+
 
 ## Task 1: Start the Docker stack and check that it is working
 
@@ -35,8 +39,9 @@ Browse to:
     http://deploy.websc
     http://deploy.websc/ezdeploy_site_admin
 
+note: credentials for the admin interface are: admin/publish
 
-## Task 2: Create a copy of the stack, to handle a new environment
+## Task 2: Create a copy of the stack, to handle a new environment: UAT
 
 ### Create a copy of the stack
 
@@ -63,14 +68,13 @@ Check that it is working:
 
 NB: this has to be done *from within the cli container*
 
-    docker exec -ti ezdeployqa_cli su site
+    docker exec -ti ezdeploy_cli su site
+    
     # (in the container)
-    vi web/htaccess
-    
-    # edit line 22, replace 'dev' by 'uat'
-    
-    # exit the container
-    exit
+        # edit line 22, replace 'dev' by 'uat'
+        sed -i 's/ENVIRONMENT=dev/ENVIRONMENT=uat/g'
+        # exit the container
+        exit
 
 Test access to http://deploy.websc/
 
@@ -78,7 +82,7 @@ What has happened ?
 
 ### Set up eZPublish configuration files for the 'uat' environment
 
-    # copy the config files form the 'dev' environment
+    # copy the config files from the 'dev' (or 'demo') environment
     cd site/ezpublish/config
     cp config_dev.yml config_uat.yml
     cp ezpublish_dev.yml ezpublish_uat.yml
