@@ -16,7 +16,7 @@ Prerequisites: having created the 'uat' docker stack (exercise 1); having it run
     php stack.php run
 
 Optional: log in to the admin interface and change the name of a content, to be verify later on 'uat'
-    
+
     docker exec -ti ezdeploy_cli su site
         NB: this has to be done *from within the cli container*
         ./bin/dumpdb.sh

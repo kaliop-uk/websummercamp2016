@@ -52,7 +52,7 @@ Question: which Symfony environment is being used?
     php stack.php stop
     cd ..
     cp -R deploy/ deploy_qa
-    
+
 ### Set the new stack to use a different Symfony environment
 
     cd deploy_qa
@@ -63,11 +63,11 @@ Question: which Symfony environment is being used?
 
     php stack.php build
     php stack.php run
-    
+
 Check that it is working:
 
   http://deploy.websc:88 => it should mention `uat`
-  
+
 ### Fix .htaccess configuration to tell Symfony the name of the environment.
 
 NB: this has to be done *from within the cli container*

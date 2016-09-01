@@ -41,6 +41,8 @@ use Oneup\FlysystemBundle\OneupFlysystemBundle;
 use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
 use Kaliop\eZMigrationBundle\EzMigrationBundle;
 
+use WebSC\SampleBundle\WebSCSampleBundle;
+
 class EzPublishKernel extends Kernel
 {
     /**
@@ -79,6 +81,8 @@ class EzPublishKernel extends Kernel
             new OneupFlysystemBundle(),
 
             new EzMigrationBundle(),
+
+            new WebSCSampleBundle()
         );
 
         switch ( $this->getEnvironment() )
