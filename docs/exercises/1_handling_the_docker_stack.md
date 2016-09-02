@@ -6,6 +6,15 @@ Goals of the exercise:
 - learning how to deploy a copy of the stack to create a new environment: `uat`
 
 
+Prerequisite (optional): stop services on the VM which will not be used during the workshop
+
+    sudo service mysql stop
+    sudo service cups stop
+    sudo service cups-browsed stop
+    sudo service php5.6-fpm stop
+    sudo service php7.0-fpm stop
+
+
 ## Task 1: Start the Docker stack and check that it is working
 
 There are 3 cases, depending on the status of the VM:
@@ -45,7 +54,6 @@ Browse to:
 note: credentials for the admin interface are: admin/publish
 
 Question: which Symfony environment is being used?
-
 
 ## Task 2: Create a copy of the stack, to handle a new environment: UAT
 
