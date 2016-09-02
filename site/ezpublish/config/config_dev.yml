@@ -7,6 +7,8 @@ framework:
         resource: "%kernel.root_dir%/config/routing_dev.yml"
         strict_requirements: true
     profiler: { only_exceptions: false }
+    # needed to allow execution of phpunit tests using the web client in this env
+    test: ~
 
 web_profiler:
     toolbar: "%debug_toolbar%"

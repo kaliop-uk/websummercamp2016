@@ -1,2 +1,2 @@
-Exercise 4: testing Varnish and HTTPS
+Exercise 8: testing Varnish and HTTPS
 =====================================

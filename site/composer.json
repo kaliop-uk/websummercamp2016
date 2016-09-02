@@ -40,7 +40,8 @@
         "kaliop/ezpublish5universalinstaller": "^2.5.1",
         "gggeek/ggsysinfo": "^0.9",
         "ezsystems/ezfind-ls": "~2015.01.0",
-        "gggeek/ezdbintegrity": "^0.8.0"
+        "gggeek/ezdbintegrity": "^0.8.0",
+        "phpunit/phpunit": "~4.0"
     },
     "require-dev": {
         "behat/behat": "3.0.*",
