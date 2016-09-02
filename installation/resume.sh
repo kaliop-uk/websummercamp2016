@@ -31,6 +31,9 @@ fi
 
 cd $DIR
 
+git checkout master
+git pull
+php stack.php build
 php stack.php run
 
 echo

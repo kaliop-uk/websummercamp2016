@@ -13,21 +13,24 @@ There are 3 cases, depending on the status of the VM:
 ### If you had finished setting up the VM by running suspend.sh:
 
     cd /var/www/summercamp/workshops/deploy
-    ./installation/resume.sh
-    
-### If you had never run the installation script of the workshop:
-
-    cd /var/www/summercamp/workshops/deploy
     git checkout master
     git pull
-    ./installation/provision.sh
+    ./installation/resume.sh
 
 ### If you are running the copy of the VM from a pendrive:
 
     cd /var/www/summercamp/workshops/deploy
     git checkout master
     git pull
+    php stack.php build
     php stack.php run
+
+### If you had never run the installation script of the workshop:
+
+    cd /var/www/summercamp/workshops/deploy
+    git checkout master
+    git pull
+    ./installation/provision.sh
 
 Check that the stack is running:
 
@@ -58,6 +61,10 @@ Question: which Symfony environment is being used?
     cd deploy_qa
     printf "\nSYMFONY_ENV_NOVARNISH=uat\n" >> docker-compose.env.local
     printf "\nSYMFONY_ENV=uat\n" >> docker-compose.env.local
+
+Optional: give the stack a different name, to avoid confusion
+
+    sed -i 's/COMPOSE_PROJECT_NAME=ezdeploy/COMPOSE_PROJECT_NAME=ezdeployqa/g' docker-compose.conf.sh
 
 ### (Re)build and start the stack
 
@@ -99,5 +106,3 @@ What has happened ?
     sed -i 's/web_profiler:/#web_profiler:/g' config_uat.yml
     sed -i 's/    toolbar:/# toolbar:/g' config_uat.yml
     sed -i 's/    intercept_redirects:/#    intercept_redirects:/g' config_uat.yml
-
-    cd ../../..
