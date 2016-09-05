@@ -23,6 +23,6 @@ Tip: use the browser debug tools for help
 
 No ready made instructions for this one :-P
 
-## Task 2: fix the broken block in the page footer
+## Task 2: fix the broken block in the page footer (nb: this breaks only in DEV, not in UAT)
 
 Tip: look for `render_hinclude`

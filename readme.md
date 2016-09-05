@@ -11,6 +11,10 @@ It consists of:
 - the source code of an eZPublish 5 website installation, based on the 'ezdemo' look and feel. The kernel version
   in use is netgen/ezpublish-kernel:14.12
 
+It should reasonably run on any platform where Docker is available.
+
+
+## Getting started (on the Summercamp VM)
 
 **IMPORTANT**
 
@@ -27,11 +31,10 @@ workshop, to avoid loosing time and clogging the hotel wifi.
 
 - please make sure you have enough time and battery. The initial setup is expected to take at least 20 minutes
 
-
-## Getting started
+### Set up
 
 - (optional) run the script `installation/preparevm.sh` if you prefer to use the Summercamp VM via samba and ssh
-  instead of via the GUI
+  instead of via the Ubuntu GUI
 
 - make sure you have the latest version of this repository:
 
@@ -61,3 +64,32 @@ workshop, to avoid loosing time and clogging the hotel wifi.
   when this workshop will start, all you have to do is start the stack of Docker containers
 
         ./installation/resume.sh
+
+
+## Getting started (on another VM or host computer)
+
+### Requirements
+
+* Docker 1.10 or later
+* Docker Compose 1.7.0 or later
+* PHP cli 5.3 or later
+* Ports 80, 88, 443, 8080, 8081 free
+* Ability to edit the host machine hosts file (or set up a DNS)
+* 4GB of RAM or more recommended
+* Lots of disk space and a decent internet connection
+
+### Set up
+
+    cd <some workspace directory>
+    git clone https://github.com/kaliop-uk/websummercamp2016.git
+    git pull
+    ./installation/provision.sh
+
+Then edit the hosts file and add an entry pointing to your host computer/VM IP with the name:
+
+    deploy.websc
+
+
+## Exercises
+
+After you have set up the VM: head on to the (Exercises docs)[docs/Readme_Exercises.md]

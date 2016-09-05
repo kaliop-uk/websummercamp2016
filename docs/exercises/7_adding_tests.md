@@ -7,6 +7,7 @@ Prerequisites:
 - having created the 'uat' docker stack (exercise 1); having it running
 - having run the migration to alter the 'article' class (exercise 6)
 
+
 ## Task 1: run a phpunit test to check if the migration was executed correctly
 
     cd /var/www/summercamp/workshops/deploy_qa
@@ -15,3 +16,7 @@ Prerequisites:
         ./bin/phpunit src/WebSC/SampleBundle/Tests/PHPUnit/
 
 Question: what has just happened?
+
+## Task 2: add execution of the tests to the deployment script, only when deploying on UAT
+
+No ready made instructions for this one :-P
