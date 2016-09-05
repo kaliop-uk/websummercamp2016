@@ -9,9 +9,14 @@
 #
 # NB: it will leave the docker containers running and the mysql and apache services on the host machine stopped
 
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    echo 'The SSH_AUTH_SOCK env variable is not set. This will give problems to the Docker stack. Please set up SSH Agent'
+    exit 1
+fi
+
 ID="$(id -u)"
 if [ $ID -ne 0 ]; then
-    echo "The script might ask you for your account password a couple of times, in order to stop running services"
+    echo "Note: the script might ask you for your account password a couple of times, in order to stop running services"
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"

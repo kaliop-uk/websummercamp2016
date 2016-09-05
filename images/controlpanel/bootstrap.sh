@@ -38,6 +38,7 @@ echo [`date`] Modifying Apache configuration...
 echo "# Config below added by bootstrap.sh" >> /etc/apache2/envvars
 echo "export SYMFONY_ENV_NOVARNISH=$SYMFONY_ENV_NOVARNISH" >> /etc/apache2/envvars
 echo "export SYMFONY_ENV_WITHVARNISH=$SYMFONY_ENV_WITHVARNISH" >> /etc/apache2/envvars
+echo "export SYMFONY_ENV=$SYMFONY_ENV" >> /etc/apache2/envvars
 
 a2dissite 000-default
 

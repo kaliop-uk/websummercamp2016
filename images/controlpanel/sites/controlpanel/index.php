@@ -39,6 +39,7 @@
         <li>Direct access: <b><?php echo htmlspecialchars(getenv('SYMFONY_ENV_NOVARNISH')); ?></b></li>
         <li>Accessed via varnish: <b><?php echo htmlspecialchars(getenv('SYMFONY_ENV_WITHVARNISH')); ?></b></li>
     </ul>
-
+    <h3>Symfony environment made available to the CLI container:</h3>
+    <b><?php echo htmlspecialchars(getenv('SYMFONY_ENV')); ?></b>
 </body>
 </html>
