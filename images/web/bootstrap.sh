@@ -42,7 +42,7 @@ echo [`date`] Modifying Apache configuration...
 SYMFONY_ENV_TRUSTEDPROXIES=$(ping -c1 -n varnish 2>/dev/null | head -n1 | sed "s/.*(\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\)).*/\1/g")
 if [ "$SYMFONY_ENV_TRUSTEDPROXIES" = "" ]; then
     # @todo move this to a config var, as we currently get 172.21.0.6...
-    SYMFONY_ENV_TRUSTEDPROXIES=172.18.0.0/24
+    SYMFONY_ENV_TRUSTEDPROXIES=172.18.0.0/24,172.19.0.0/24
 fi
 
 # @todo improve this: if the container is bootstrapped many times, the envvars file will keep growing

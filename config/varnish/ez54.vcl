@@ -16,6 +16,7 @@ backend ezpublish {
 acl invalidators {
     "127.0.0.1";
     "172.18.0.0"/24;
+    "172.19.0.0"/24;
     //"192.168.1.0"/16;
 }
 
@@ -30,6 +31,7 @@ acl debuggers {
 // ACL for the proxies in front of Varnish (e.g. Nginx terminating https) - only other containers
 acl proxies {
     "172.18.0.0"/24;
+    "172.19.0.0"/24;
 }
 
 // Called at the beginning of a request, after the complete request has been received

@@ -16,11 +16,13 @@ Prerequisites: having created the 'uat' docker stack (exercise 1); having it run
     cp dev/web/.htaccess uat/web
     sed -i 's/ENVIRONMENT=dev/ENVIRONMENT=uat/g' uat/web/.htaccess
     sed -i 's/ENVIRONMENT=uat/ENVIRONMENT=dev/g' dev/web/.htaccess
+    sed -i 's/SetEnvIf Request_Method .* USE_DEBUGGING=1/SetEnvIf Request_Method .* USE_DEBUGGING=0/g' uat/web/.htaccess
+    sed -i 's/SetEnvIf Request_Method .* USE_DEBUGGING=0/SetEnvIf Request_Method .* USE_DEBUGGING=1/g' dev/web/.htaccess
 
 ### Deploy them
 
     NB: this has to be done *from within the cli container*
-    docker exec -ti ezdeploy_cli su site
+    docker exec -ti ezdeployqa_cli su site
     
     # (in the container)
         # deploy the config files

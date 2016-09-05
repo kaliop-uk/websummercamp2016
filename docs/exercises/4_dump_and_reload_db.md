@@ -40,7 +40,7 @@ Optional: log in to the admin interface and change the name of a content, to be 
     cd /var/www/summercamp/workshops/deploy_qa
     php stack.php run
 
-    docker exec -ti ezdeploy_cli su site
+    docker exec -ti ezdeployqa_cli su site
         NB: this has to be done *from within the cli container*
         ./bin/importdb.sh
         # exit the container

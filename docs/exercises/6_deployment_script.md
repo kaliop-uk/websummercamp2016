@@ -10,9 +10,12 @@ Prerequisites: having created the 'uat' docker stack (exercise 1); having it run
     cd /var/www/summercamp/workshops/deploy_qa
     
     NB: this has to be done *from within the cli container*
-    docker exec -ti ezdeploy_cli su site
+    docker exec -ti ezdeployqa_cli su site
     
-    # (in the container)
+        # (in the container)
         ./bin/deploy.sh
 
 Look at the output on screen and try to make sense of it
+
+        # exit the container
+        exit

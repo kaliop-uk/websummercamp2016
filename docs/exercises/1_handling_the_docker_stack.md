@@ -67,12 +67,13 @@ Question: which Symfony environment is being used?
 ### Set the new stack to use a different Symfony environment
 
     cd deploy_qa
+    printf "\nSYMFONY_ENV=uat\n" >> docker-compose.env.local
     printf "\nSYMFONY_ENV_NOVARNISH=uat\n" >> docker-compose.env.local
     printf "\nSYMFONY_ENV=uat\n" >> docker-compose.env.local
 
-Optional: give the stack a different name, to avoid confusion
+Give the stack a different name, to avoid confusion
 
-    sed -i 's/COMPOSE_PROJECT_NAME=ezdeploy/COMPOSE_PROJECT_NAME=ezdeployqa/g' docker-compose.conf.sh
+    sed -i 's/COMPOSE_PROJECT_NAME=ezdeploy$/COMPOSE_PROJECT_NAME=ezdeployqa/g' docker-compose.conf.sh
 
 ### (Re)build and start the stack
 
@@ -87,11 +88,13 @@ Check that it is working:
 
 NB: this has to be done *from within the cli container*
 
-    docker exec -ti ezdeploy_cli su site
+    docker exec -ti ezdeployqa_cli su site
     
     # (in the container)
         # edit line 22, replace 'dev' by 'uat'
         sed -i 's/ENVIRONMENT=dev/ENVIRONMENT=uat/g' web/.htaccess
+        # edit line 22, disable usage of Assetic debug mode 
+        sed -i 's/SetEnvIf Request_Method .* USE_DEBUGGING=1/SetEnvIf Request_Method .* USE_DEBUGGING=0/g' web/.htaccess
         # exit the container
         exit
 
@@ -111,6 +114,9 @@ What has happened ?
     # patch them
     sed -i 's/parameters_dev.yml/parameters_uat.yml/g' config_uat.yml
     sed -i 's/routing_dev/routing_uat/g' config_uat.yml
+    # disable Sf debug mode tools
     sed -i 's/web_profiler:/#web_profiler:/g' config_uat.yml
     sed -i 's/    toolbar:/# toolbar:/g' config_uat.yml
     sed -i 's/    intercept_redirects:/#    intercept_redirects:/g' config_uat.yml
+
+Test against access to http://deploy.websc/ and http://deploy.websc/ezdeploy_site_admin

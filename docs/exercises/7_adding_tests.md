@@ -11,8 +11,8 @@ Prerequisites:
 ## Task 1: run a phpunit test to check if the migration was executed correctly
 
     cd /var/www/summercamp/workshops/deploy_qa
-    docker exec -ti ezdeploy_cli su site
-        NB: this has to be done *from within the cli container*
+    docker exec -ti ezdeployqa_cli su site
+        # NB: this has to be done *from within the cli container*
         ./bin/phpunit src/WebSC/SampleBundle/Tests/PHPUnit/
 
 Question: what has just happened?

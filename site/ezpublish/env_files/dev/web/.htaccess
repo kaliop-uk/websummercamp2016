@@ -1,7 +1,7 @@
     ### htaccess for DEV env
 
-    # Allow ONLY TRUSTED IPS to send calls to clean the OPCache
-    RewriteCond %{REMOTE_ADDR} ^172\.18\.0\.
+    # Allow ONLY TRUSTED IPS to send calls to clean the OPCache. This seems to change with Docker versions...
+    RewriteCond %{REMOTE_ADDR} ^172\.1[89]\.0\.
     RewriteRule ^clearopcache.php - [L]
 
     # NB: we have to leave out the indented ones and set them in the vhost config

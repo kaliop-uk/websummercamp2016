@@ -14,8 +14,12 @@ class RoutingTest extends WebTestCase
     {
         $client = new Client();
         $request = $client->get($this->getHostName() . $url);
-        $response = $client->send($request);
-        $this->assertEquals(200, $response->getStatusCode());
+        try {
+            $response = $client->send($request);
+            $this->assertEquals(200, $response->getStatusCode());
+        } catch (\Guzzle\Http\Exception\ClientErrorResponseException $e) {
+            $this->fail($e->getMessage());
+        }
     }
 
     public function urlProvider()
