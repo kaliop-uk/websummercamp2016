@@ -70,15 +70,15 @@ fi
 
 # purge php opcache
 echo "Purging opcache cache..."
-php $DIR/ezp5installer.php http:request --key=parameters.opcache_purge_url
+php $DIR/ezp5installer.php http:request --key=parameters.opcache_purge_url --env=$ENV
 
 # reindex. we always do it, in case any indexation setting has changed
 echo "Reindexing content..."
-php ezpublish/console ezpublish:legacy:script bin/php/updatesearchindex.php --siteaccess=ezdeploy_site_admin --clean
+php ezpublish/console ezpublish:legacy:script bin/php/updatesearchindex.php --siteaccess=ezdeploy_site_admin --clean --env=$ENV
 
 # purge memcache (based on env settings)
 echo "Purging memcache..."
-php $DIR/ezp5installer.php memcache:purge
+php $DIR/ezp5installer.php memcache:purge --env=$ENV
 
 # purge varnish (based on env settings)
 echo "Purging varnish..."
@@ -86,12 +86,12 @@ if [ "dev" = "$ENV" or "uat" = "$ENV" ]; then
     # when deploying the 'dev' envs, we clear varnish for the 'demo' env, as they run both on the same installation
     php $DIR/ezp5installer.php varnish:purge --key=ezpublish.system.ezdeploy_site_group.http_cache.purge_servers --env=demo
 else
-    php $DIR/ezp5installer.php varnish:purge --key=ezpublish.system.ezdeploy_site_group.http_cache.purge_servers
+    php $DIR/ezp5installer.php varnish:purge --key=ezpublish.system.ezdeploy_site_group.http_cache.purge_servers --env=$ENV
 fi
 
 # and, for good measure:
 if [ "dev" = "$ENV" ]; then
-    php ezpublish/console security:check
+    php ezpublish/console security:check --env=$ENV
 fi
 
 # Tell NewRelic that we deployed
